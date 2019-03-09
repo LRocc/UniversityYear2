@@ -1,0 +1,9 @@
+package superhero;
+public class Player
+{
+	public Player(int coins,Set<GameCharacter> characters)
+	{
+		this.coins = coins;
+		this.characters = characters;
+	}
+}

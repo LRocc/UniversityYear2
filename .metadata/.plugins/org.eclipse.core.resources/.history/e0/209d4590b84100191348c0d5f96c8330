@@ -1,0 +1,16 @@
+package detectors;
+
+import java.util.ArrayList;
+
+import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+
+public class PolymorphicRecursion extends VoidVisitorAdapter<ArrayList<BreakPoints>> {
+	@Override
+	public void visit(MethodCallExpr method,ArrayList<BreakPoints> breakpointlist)
+	{
+		String methodName = method.getNameAsString();
+		node daddy = method.getParentNode();
+	}
+
+}

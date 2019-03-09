@@ -1,0 +1,34 @@
+package superhero;
+
+import java.util.Arrays;
+import java.util.HashSet;
+
+public final class GameCharacter implements Comparable<GameCharacter>
+{
+
+	private final HashSet powers;
+	private final int cost;
+	private final String name;
+	public GameCharacter(String name, int cost, Power... powers)
+	{
+		this.name = name;
+		this.cost = cost;
+		this.powers = new HashSet<>(Arrays.asList(powers));
+	}
+	public final String getName() {
+		return this.name;
+	}
+	public final int getCost() {
+		return this.cost;
+	}
+	public final HashSet<GameCharacter> getPowers()
+	{
+		return new HashSet<>(this.powers);
+	}1
+	@Override
+	public int compareTo(GameCharacter o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+}

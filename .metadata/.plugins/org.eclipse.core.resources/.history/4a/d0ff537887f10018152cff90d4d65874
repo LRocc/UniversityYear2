@@ -1,0 +1,9 @@
+public class Player
+{
+	public Player(String name,int coins,Set<GameCharacter> characters)
+	{
+		this.name = name;
+		this.coins = coins;
+		this.characters = characters;
+	}
+}

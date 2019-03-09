@@ -1,0 +1,37 @@
+package superhero;
+
+import java.util.Set;
+
+public class Player
+{
+	private int coins;
+	private Set<GameCharacter> characters;
+
+	public Player(int coins,Set<GameCharacter> characters)
+	{
+		this.coins = coins;
+		this.characters = characters;
+	}
+	
+	public int getCoins()
+	{
+		return this.coins;
+	}
+	public Set<GameCharacter> getCharacters()
+	{
+		return this.characters;
+	}
+	
+	public void buy(GameCharacter gc) throws IllegalArgumentException
+	{
+		if(this.getCharacters().contains(gc))
+		{
+			throw new IllegalArgumentException();
+		}
+		if(this.getCoins() - gc.getCost())
+		{
+			throw new IllegalArgumentException();
+		}
+	}
+	
+}

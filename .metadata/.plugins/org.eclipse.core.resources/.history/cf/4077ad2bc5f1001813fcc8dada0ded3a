@@ -1,0 +1,5 @@
+package superhero;
+public final class gameCharacter implements Comparable<GameCharacter>
+{
+	
+}

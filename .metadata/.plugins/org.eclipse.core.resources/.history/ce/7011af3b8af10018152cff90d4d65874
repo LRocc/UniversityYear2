@@ -1,0 +1,56 @@
+package superhero;
+
+import java.util.*;
+
+public class Player
+{
+
+    int coins;
+    HashSet<GameCharacter> characters;
+    public Player(int coins,Set<GameCharacter> characters)
+    {
+        this.coins = coins;
+        this.characters = (HashSet<GameCharacter>)characters;
+    }
+
+    public int getCoins()
+    {
+        return this.coins;
+    }
+    public Set<GameCharacter> getCharacters()
+    {
+        return this.characters;
+    }
+
+    public void buy(GameCharacter gc) throws IllegalArgumentException
+    {
+        if(this.getCharacters().contains(gc))
+        {
+            throw new IllegalArgumentException();
+        }
+        if (this.getCoins() - gc.getCost() < 0)
+        {
+            throw new IllegalArgumentException();
+        }
+        this.characters.add(gc);
+        this.coins = this.coins - gc.getCost();
+    }
+
+    public Set<GameCharacter> chooseCharacters(Power... neededPowers)
+    {
+    	HashSet<Power> selelctionCriteria = new HashSet<>(Arrays.asList(neededPowers));
+    	HashSet<Power> selectedPower = new HashSet<>();
+    	HashSet<GameCharacter> out = new HashSet<>();
+    	
+    	for(Power power: selelctionCriteria)
+    	{
+    		for(GameCharacter character : this.getCharacters())
+    		{
+    			if(character.getPowers().contains(power))
+    			{
+    				selectedPower.add(power);
+    				out.add(character);
+    			}
+    		}
+    	}
+    }

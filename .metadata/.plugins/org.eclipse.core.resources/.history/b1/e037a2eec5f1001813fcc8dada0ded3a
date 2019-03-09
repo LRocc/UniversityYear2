@@ -1,0 +1,6 @@
+package superhero;
+public class Player
+{
+	int coins;
+	Set<GameCharacter> characters;
+}

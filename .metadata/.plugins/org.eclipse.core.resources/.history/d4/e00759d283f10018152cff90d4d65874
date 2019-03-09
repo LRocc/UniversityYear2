@@ -1,0 +1,70 @@
+package superhero;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+public final class GameCharacter implements Comparable<GameCharacter>
+{
+    private final String name;
+    private final int cost;
+    private final HashSet<Power> powers;
+
+    /**
+     * Java doc for constructor
+     * @param name
+     * @param cost
+     * @param powers
+     */
+    public GameCharacter(String name, int cost, Power... powers)
+    {
+        this.name = name;
+        this.cost = cost;
+        this.powers = new HashSet<Power>(Arrays.asList(powers));
+    }
+
+    /**
+     * getters
+     */
+    public final int getCost()
+    {
+        int temp = this.cost;
+        return temp;
+    }
+    public final String getName()
+    {
+        String temp = this.name;
+        return temp;
+    }
+    public final Set<Power> getPowers()
+    {
+        return new HashSet<>(this.powers);
+    }
+
+
+    /**
+     *
+     * @param o
+     * @return
+     */
+    @Override
+    public int compareTo(GameCharacter o) {
+        return this.getCost() - o.getCost();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameCharacter character = (GameCharacter) o;
+        return getCost() == character.getCost() &&
+                Objects.equals(getName(), character.getName()) &&
+                Objects.equals(getPowers(), character.getPowers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getCost(), getPowers());
+    }
+}

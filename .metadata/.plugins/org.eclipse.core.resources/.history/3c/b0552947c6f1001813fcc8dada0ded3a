@@ -1,0 +1,15 @@
+package superhero;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Player
+{
+	int coins;
+	HashSet<GameCharacter> characters;
+	pubic Player(int coins,Set<GameCharacters> characters)
+	{
+		this.coins = coins;
+		this.characters = characters;
+	}
+}

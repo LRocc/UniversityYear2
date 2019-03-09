@@ -1,0 +1,20 @@
+package superhero;
+
+import java.util.Set;
+
+public class Player
+{
+	private int coins;
+	private Set<GameCharacter> characters;
+
+	public Player(int coins,Set<GameCharacter> characters)
+	{
+		this.coins = coins;
+		this.characters = characters;
+	}
+	
+	public int getCoins()
+	{
+		return this.coins;
+	}
+}

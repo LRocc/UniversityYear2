@@ -1,0 +1,104 @@
+package superhero;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+public class Player
+{
+	private int coins;
+	private Set<GameCharacter> characters;
+
+	public Player(int coins,Set<GameCharacter> characters)
+	{
+		this.coins = coins;
+		this.characters = characters;
+	}
+	
+	public int getCoins()
+	{
+		return this.coins;
+	}
+	public Set<GameCharacter> getCharacters()
+	{
+		return this.characters;
+	}
+	
+	public void buy(GameCharacter gc) throws IllegalArgumentException
+	{
+		if(this.getCharacters().contains(gc))
+		{
+			throw new IllegalArgumentException();
+		}
+		if(this.getCoins() - gc.getCost() < 0)
+		{
+			throw new IllegalArgumentException();
+		}
+		this.buy(gc);
+		this.coins = this.coins - gc.getCost();
+	}
+	
+	public Set<GameCharacter> chooseCharacters(Power... neededPowers)
+	{
+		HashSet<Power> selectionCriteria = new HashSet<>(Arrays.asList(neededPowers));
+		HashSet<Power> selectedPowers = new HashSet<>();
+		HashSet<GameCharacter> out = new HashSet<>();
+		
+		for(Power power : selectionCriteria)
+		{
+			for(GameCharacter character:this.getCharacters())
+			{
+				if(character.getPowers().contains(power))
+				{
+					out.add(character);
+					selectedPowers.add(power);
+				}
+			}
+		}
+		selectionCriteria.removeAll(selectedPowers);
+		if(selectionCriteria.isEmpty())
+		{
+			return out;
+		}
+		HashSet<GameCharacter> toBuy = new HashSet<>();
+		HashSet<GameCharacter> available = new HashSet<>(GameCharacters.getAllCharacters());
+		int totalCost = 0;
+		for(GameCharacter character: available)
+		{
+			if(this.getCharacters().contains(character))
+			{
+				continue;
+			}
+			for(Power power :character.getPowers())
+			{
+				if(selectionCriteria.contains(power))
+				{
+					if(character.getCost() <= (this.coins - totalCost))
+					{
+						totalCost += character.getCost();
+						toBuy.add(character);
+						for(Power power1 : character.getPowers())
+						{
+							selectionCriteria.remove(power1);
+						}
+					}
+				}
+			}
+		}
+		if(selectionCriteria.isEmpty())
+		{
+			for(GameCharacter character1 : toBuy)
+			{
+				this.buy(character1);
+				out.add(character1);
+			}
+		}
+		else
+		{
+			return null;
+		}
+		return out;
+
+	}
+	
+}

@@ -1,0 +1,39 @@
+package superhero;
+
+import java.util.HashSet;
+
+public class Player
+{
+	private String name;
+	private int coins;
+	private HashSet<GameCharacter> characters;
+
+	public Player(String name,int coins,HashSet<GameCharacter> characters)
+	{
+		this.name = name;
+		this.coins = coins;
+		this.characters = characters;
+	}
+	
+	/**
+	 * Getters
+	 */
+	public String getName() {
+		return this.name;
+	}
+	public int getCoins() {
+		return this.coins;
+	}
+	public HashSet<GameCharacter> getCharacters() {
+		return this.getCharacters();
+	}
+	
+	public void buy(GameCharacter gc) throws IllegalArgumentException
+	{
+		if(this.getCharacters().contains(gc))
+		{
+			throw new IllegalArgumentException();
+		}
+	}
+	
+}

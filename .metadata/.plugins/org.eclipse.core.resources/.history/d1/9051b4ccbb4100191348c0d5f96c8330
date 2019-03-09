@@ -1,0 +1,39 @@
+package detectors;
+
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import com.github.javaparser.Position;
+import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.stmt.Statement;
+
+/***
+ * The Class BreakPoints collects  the  observed  behaviour  as  
+ * the visit method(s)  implemented in detector transverses 
+ * through the program structure
+ * @author lorenzo
+ *
+ */
+public class BreakPoints {
+	
+	
+	
+	private ArrayList<BreakPoints> br;
+	private Map<String, Optional<Position>> map;
+	
+
+	public BreakPoints() {
+		// TODO Auto-generated constructor stub
+		br = new ArrayList<>();
+		map = new HashMap<String, Optional<Position>>();
+	}
+	public void add(String methodName, String string, String string2) {
+		// TODO Auto-generated method stub
+		List<String> list = new ArrayList(methodName,string,string2);
+		br.addAll(methodName,string,string2);
+	}
+
+}

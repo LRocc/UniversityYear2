@@ -1,0 +1,11 @@
+import java.util.Arrays;
+
+public final class GameCharacter
+{
+	public GameCharacter(String name,int cost,Power...powers)
+	{
+		this.name = name;
+		this.cost = cost;
+		this.powers = new HashSet<Power>(Arrays.asList(powers));
+	}
+}

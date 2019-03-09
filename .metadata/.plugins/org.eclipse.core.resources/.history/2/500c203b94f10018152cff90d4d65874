@@ -1,0 +1,40 @@
+import java.util.Arrays;
+import java.util.HashSet;
+
+public final class GameCharacter
+{
+	private final String name;
+	private final HashSet<Power> powers;
+	private final int cost;
+
+	public GameCharacter(String name,int cost,Power...powers)
+	{
+		this.name = name;
+		this.cost = cost;
+		this.powers = new HashSet<Power>(Arrays.asList(powers));
+	}
+	
+	/**
+	 * Getters
+	 */
+	
+	public final String getName() 
+	{
+		return this.name;
+	}
+	
+	public final int getCost() 
+	{
+		return this.cost;
+	}
+	public final HashSet<Power> getPowers()
+	{
+		return new HashSet<Power>(this.powers);
+	}
+	@Override
+	public String toString()
+	{
+		return("Name" + this.name + "Cost " + this.getCost()  + " powers" + this.getPowers());
+	}
+	
+}
