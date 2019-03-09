@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="net.sf.randomjunit:random-jUnit:1.0.2" type="repository">
+    <properties maven-id="net.sf.randomjunit:random-jUnit:1.0.2" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/random-jUnit-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit-4.8.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
