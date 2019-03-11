@@ -1,0 +1,302 @@
+import java.io.DataOutput;
+import java.util.Hashtable;
+import java.util.function.DoubleToLongFunction;
+
+public class DoubleLinkedList {
+	
+	// Class for Doubly Linked List
+		Node head; // head of list 
+		/* Doubly Linked list Node*/
+		class Node { 
+			int data; 
+			Node prev; 
+			Node next; 
+
+			// Constructor to create a new node 
+			// next and prev is by default initialized as null 
+			Node(int d) { data = d; } 
+		} 
+		
+		
+
+		// Adding a node at the front of the list 
+		public void insertAtHead(int new_data) 
+		{ 
+		    /* 1. allocate node  
+		    * 2. put in the data */
+		    Node new_Node = new Node(new_data); 
+		    
+		    
+		    /* 3. Make next of new node as head and previous as NULL */
+		    new_Node.next = head; 
+		    new_Node.prev = null; 
+		  
+		    /* 4. change prev of head node to new node */
+		    if (head != null) 
+		        head.prev = new_Node; 
+		    
+		    /* 5. move the head to point to the new node */
+		    head = new_Node; 
+		} 
+		
+		//DeleteNode in a List
+		public void deleteNode(Node head_ref,Node toDelete)
+		{
+			//Check to see if the node to delete is the head
+			//If So, delete Next current head
+			if(toDelete == head)
+			{
+				head = toDelete.next;
+			}
+			//Set Next to previous toDelete if exists
+			//Change only if node todleete is not the Last Ones
+			if(toDelete.next != null)
+			{
+				toDelete.next.prev = toDelete.prev;
+			}
+			
+			//Change prev node only if not the head
+			if(toDelete.prev != null)
+			{
+				toDelete.prev.next = toDelete.next;
+			}
+			
+			return;
+		}
+		
+		//Check if node x is part of list
+		//DOESEN@T WORk
+		/***
+		public static boolean checkList(DoubleLinkedList list , Node x)
+		{
+			//Search of the linked list for element x
+			Node a = list.head;
+			while(a != null && a.data != x.data )
+			{
+				a = x.next;
+			}
+			return true;
+		}
+		***/
+		//Check if node x is part of the list and returns that node
+		public boolean searchList(DoubleLinkedList list,Node x)
+		{
+			Node current = list.head;
+			
+			while(current != null)
+			{
+				if(current.data == x.data)
+				{
+					return true;
+				}
+				else {
+					current = current.next;
+				}
+				
+			}
+			return false;
+			
+		}
+		//Check if list is empty
+		public boolean EmptyList(DoubleLinkedList list)
+		{
+			//we just need to heck if there is an element at the head
+			if(list.head == null)
+			{
+				return true;
+			}
+			else {
+				return false;
+			}
+			
+		}
+
+		//Returns the size of the list
+		public int size(DoubleLinkedList list) {
+		   int count = 0;
+		   Node current = list.head;
+		   while(current != null)
+		   {
+			   current = current.next;
+			   count ++;
+		   }
+		   return count;
+		}
+		
+		
+		//Union of two lists
+		public DoubleLinkedList unionOfLists(DoubleLinkedList list1, DoubleLinkedList list2)
+		{
+			Node head1 = list1.head;
+			Node head2 = list2.head;
+			DoubleLinkedList listResult = new DoubleLinkedList();
+			//Insert all elements of List1 into The result
+			while(head1 != null)
+			{
+				listResult.insertAtHead(head1.data);
+				head1 = head1.next;
+			}
+			
+			//Insert elements of t2 that are not present
+			while(head2 !=null)
+			{
+				if(!searchList(listResult, head2))
+				{
+					listResult.insertAtHead(head2.data);
+					System.out.println("Found union");
+					listResult.printlist(listResult);
+				}
+				else {
+					head2 = head2.next;
+				}
+			}
+			
+			return listResult;
+		}
+		
+		//Returns the intersection of Two double linked list
+		public  DoubleLinkedList intersection(DoubleLinkedList list1,DoubleLinkedList list2)
+		{
+			Node head1 = list1.head;
+			Node head2 = list2.head;
+			DoubleLinkedList result = new DoubleLinkedList();
+			//Check list2 with elements of list one for correspondence and adds it to the resulting intersetion list
+			while(head1 != null)
+			{
+				if(searchList(list2, head1))
+				{
+					result.insertAtHead(head1.data);
+				}
+				head1 = head1.next;
+			}
+			return result;
+		}
+		
+		
+		public  DoubleLinkedList difference(DoubleLinkedList list1, DoubleLinkedList list2)
+		{
+			Node head1 = list1.head;
+			Node head2 = list2.head;
+			DoubleLinkedList result = new DoubleLinkedList();
+			//Iterates over elements of list 1 and checks if they are present in list2
+			while(head1 != null)
+			{
+				//If they are present is not a difference so get enxt result in the list
+				if(searchList(list2, head1))
+				{
+					//System.out.println(head1.data + "HERES WHAT IM PUTIING IN THE RESULT");
+					head1 = head1.next;
+				}//If they are not present add them to result
+				else {
+					//System.out.println(head1.data + "HERES WHAT IM PUTIING IN THE RESULT");
+					result.insertAtHead(head1.data);
+					head1 = head1.next;
+				}
+			}
+			return result;
+		}
+		
+		
+		//Check if list2 is a subset of list1
+		public boolean subSet(DoubleLinkedList list1, DoubleLinkedList list2)
+		{
+			Node head1 = list1.head;
+			Node head2 = list2.head;
+			Hashtable hash = new Hashtable<>();
+			//Populate a hashtable with the elements of list1
+			while(head1 !=null)
+			{
+				hash.put(head1.data,head1);
+				head1 = head1.next;
+			}
+			System.out.println(hash + "THIS IS THE SET CONTAINING THE LIST ");
+			//Check if elements in lsit 2 are able to retrive elements in list1
+			//If all elements in list2 don't return null it means that ALL ELEMENTS OF LIST 2 ARE IN LIST 1
+			while(head2 != null)
+			{
+				Node temp = (Node) hash.get(head2.data);
+				System.out.println(temp + "THIS IS THE NODE WE ARE LOOKING AT");
+				if(temp == null) {
+					return false;
+				}else {
+					head2 = head2.next;
+					return true;
+					
+				}
+			}
+			return false;
+			
+			
+		}
+		
+		
+		 public void printlist(DoubleLinkedList list1) 
+		    { 
+		        Node last = list1.head; 
+		  
+		        while (last != null) { 
+		            System.out.print(last.data + " "); 
+		            
+		            last = last.next; 
+		        } 
+		  
+		        System.out.println(); 
+		    } 
+		
+		public static void main(String... args)
+		{
+			DoubleLinkedList list1 = new DoubleLinkedList();
+			DoubleLinkedList list2 = new DoubleLinkedList();
+
+			DoubleLinkedList empty = new DoubleLinkedList();
+			
+			//Populate lists1
+			list1.insertAtHead(1);
+			list1.insertAtHead(4);
+			list1.insertAtHead(6);
+			list1.insertAtHead(3);
+			
+			
+			//Populate lists2
+			list2.insertAtHead(4);
+			list2.insertAtHead(6);
+			list2.insertAtHead(3);
+			list2.insertAtHead(8);
+			
+			//TEST FOR DIFFERENCE
+			DoubleLinkedList temp = list2.difference(list1, list2);
+			System.out.println("Difference:");
+			temp.printlist(temp);
+
+			//TEST FOR Union
+			DoubleLinkedList union = list2.unionOfLists(list1, list2);
+			System.out.println("union:");
+			union.printlist(union);
+			
+			//TEST FOR empty
+			boolean isEmpty = empty.EmptyList(empty);
+			System.out.println("Test For empty:");
+			System.out.println(isEmpty);
+			
+			//TEST FOR INTERSECTION
+			DoubleLinkedList intersect = list2.intersection(list1, list2);
+			System.out.println("intersection:");
+			union.printlist(intersect);
+			
+			//TEST FOR SubSet
+			boolean isSubSet = list2.subSet(list1, list2);
+			System.out.println("is List2 a subset of list 1:");
+			System.out.println(isSubSet);
+			
+			//TEST FOR Size
+			int size = list2.size(list2);
+			System.out.println("is List2 a subset of list 1:");
+			System.out.println(isSubSet);
+			
+		}
+		
+		
+	 
+
+
+}

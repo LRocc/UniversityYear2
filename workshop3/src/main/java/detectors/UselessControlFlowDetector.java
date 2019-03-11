@@ -79,6 +79,7 @@ public class UselessControlFlowDetector extends VoidVisitorAdapter<BreakPoints> 
     			String end = n1.getEnd().toString();
     			BreakPoints result = new BreakPoints();
     			result.add(methodNAme, begin, end);
+    			
     		}
     	}
     }

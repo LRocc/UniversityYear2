@@ -1,0 +1,349 @@
+import java.util.ArrayList;
+
+public class BinarySearchTree 
+{
+	/* Class containing left and right child of current node and key value*/
+    class Node { 
+        int key; 
+        Node left, right; 
+  
+        public Node(int item) { 
+            key = item; 
+            left = right = null; 
+        } 
+    } 
+    
+    
+    
+  
+    // Root of BST 
+    Node root; 
+  
+    // Constructor 
+    BinarySearchTree() {  
+        root = null;  
+    } 
+    
+
+	 // SEARCH FUNCTION 
+	 public Node search(Node root, int key) 
+	 { 
+	     // IF Tree is empty or the key is the root 
+	     if (root==null || root.key==key) 
+	     {
+	    	 return root; 
+	     }
+	         
+	     // val is greater than root's key 
+	     //As all greater vaues that the root are kept on the right of the tree
+	     //And all the smaller ones are kept on the left
+	     //We first check if the values if bigger saller or equal to the root and decide where to move from there
+	     if (root.key > key) 
+	     {
+	    	 return search(root.left, key); 
+	  	   
+	     }
+	         
+	     // val is less than root's key 
+	     return search(root.right, key); 
+	 } 
+	 
+	 
+	// INSERTION
+	    void insert(int key) { 
+	       root = insertRec(root, key); 
+	    } 
+	      
+	    /* A recursive function to insert a new key in BST */
+	    Node insertRec(Node root, int key) { 
+	  
+	        /* If the tree is empty, return a new node */
+	        if (root == null) { 
+	            root = new Node(key); 
+	            return root; 
+	        } 
+	  
+	        /* Otherwise, recur down the tree */
+	        if (key < root.key) 
+	            root.left = insertRec(root.left, key); 
+	        else if (key > root.key) 
+	            root.right = insertRec(root.right, key); 
+	  
+	        /* return the (unchanged) node pointer */
+	        return root; 
+	    } 
+	    
+	 // This method mainly calls InorderRec() 
+	    void inorder()  { 
+	       inorderRec(root); 
+	    } 
+	  
+	    // A utility function to do inorder traversal of BST 
+	    void inorderRec(Node root) { 
+	        if (root != null) { 
+	            inorderRec(root.left); 
+	            System.out.println(root.key); 
+	            inorderRec(root.right); 
+	        } 
+	    } 
+	    
+	    
+	    //DELETION OF A LEAF
+	    // This method mainly calls deleteRec() 
+	    void deleteKey(int key) 
+	    { 
+	        root = deleteRec(root, key); 
+	    } 
+	  
+	    /* A recursive function to insert a new key in BST */
+	    Node deleteRec(Node root, int key) 
+	    { 
+	        /* Base Case: If the tree is empty */
+	        if (root == null)  return root; 
+	  
+	        /* Otherwise, recur down the tree */
+	        if (key < root.key) 
+	            root.left = deleteRec(root.left, key); 
+	        else if (key > root.key) 
+	            root.right = deleteRec(root.right, key); 
+	  
+	        // if key is same as root's key, then This is the node 
+	        // to be deleted 
+	        else
+	        { 
+	            // node with only one child or no child 
+	            if (root.left == null) 
+	                return root.right; 
+	            else if (root.right == null) 
+	                return root.left; 
+	  
+	            // node with two children: Get the inorder successor (smallest 
+	            // in the right subtree) 
+	            root.key = minValue(root.right); 
+	  
+	            // Delete the inorder successor 
+	            root.right = deleteRec(root.right, root.key); 
+	        } 
+	  
+	        return root; 
+	    } 
+	    
+	    int minValue(Node root) 
+	    { 
+	        int minv = root.key; 
+	        while (root.left != null) 
+	        { 
+	            minv = root.left.key; 
+	            root = root.left; 
+	        } 
+	        return minv; 
+	    } 
+	  
+	    //Check if tree is empty
+	    //Just check the root
+	    public boolean isEmpty(Node root,int key)
+	    {
+	    	if(root == null)
+	    	{
+	    		return true;
+	    	}
+	    	else{
+	    		return false;
+	    	}
+	    }
+	    
+	    //Returns the size of the tree
+	    int size()
+	    {
+	    	return size(root);
+	    }
+	    
+	    int size(Node node)
+	    {
+	    	if(node == null)
+	    	{
+	    		return 0;
+	    	}
+	    	else {
+	    		return(size(root.left) + 1 + size(root.right));
+	    	}
+	    }
+	    
+	    /***
+	     * Start
+	     * @param args
+	     */
+	    
+	 // A Utility Method that stores inorder traversal of a tree 
+	    public ArrayList<Integer> storeInorderUtil(Node node, ArrayList<Integer> list) 
+	    { 
+	        if(node == null) 
+	            return list; 
+	          
+	        //recur on the left child 
+	        storeInorderUtil(node.left, list); 
+	          
+	        // Adds data to the list 
+	        list.add(node.key); 
+	          
+	        //recur on the right child 
+	        storeInorderUtil(node.right, list); 
+	          
+	        return list; 
+	    } 
+	      
+	    // Method that stores inorder traversal of a tree 
+	    ArrayList<Integer> storeInorder(Node node) 
+	    { 
+	        ArrayList<Integer> list1 = new ArrayList<>();  
+	        ArrayList<Integer> list2 = storeInorderUtil(node,list1);  
+	        return list2; 
+	    } 
+	  
+	    // Method that merges two ArrayLists into one.  
+	    ArrayList<Integer> merge(ArrayList<Integer>list1, ArrayList<Integer>list2, int m, int n) 
+	    { 
+	        // list3 will contain the merge of list1 and list2 
+	        ArrayList<Integer> list3 = new ArrayList<>(); 
+	        int i=0; 
+	        int j=0; 
+	          
+	        //Traversing through both ArrayLists 
+	        while( i<m && j<n) 
+	        { 
+	            // Smaller one goes into list3 
+	            if(list1.get(i)<list2.get(j)) 
+	            { 
+	                list3.add(list1.get(i)); 
+	                i++; 
+	            } 
+	            else
+	            { 
+	                list3.add(list2.get(j)); 
+	                j++; 
+	            } 
+	        } 
+	          
+	        // Adds the remaining elements of list1 into list3 
+	        while(i<m) 
+	        { 
+	            list3.add(list1.get(i)); 
+	            i++; 
+	        } 
+	      
+	        // Adds the remaining elements of list2 into list3 
+	        while(j<n) 
+	        { 
+	            list3.add(list2.get(j)); 
+	            j++; 
+	        } 
+	        return list3; 
+	    } 
+	      
+	    // Method that converts an ArrayList to a BST 
+	    Node ALtoBST(ArrayList<Integer>list, int start, int end) 
+	    { 
+	        // Base case 
+	        if(start > end) 
+	            return null; 
+	      
+	        // Get the middle element and make it root      
+	        int mid = (start+end)/2; 
+	        Node node = new Node(list.get(mid)); 
+	  
+	        /* Recursively construct the left subtree and make it 
+	        left child of root */
+	        node.left = ALtoBST(list, start, mid-1); 
+	          
+	        /* Recursively construct the right subtree and make it 
+	        right child of root */
+	        node.right = ALtoBST(list, mid+1, end); 
+	      
+	    return node; 
+	    } 
+	      
+	    // Method that merges two trees into a single one.  
+	    Node mergeTrees(Node node1, Node node2) 
+	    { 
+	        //Stores Inorder of tree1 to list1 
+	        ArrayList<Integer>list1 = storeInorder(node1); 
+	          
+	        //Stores Inorder of tree2 to list2 
+	        ArrayList<Integer>list2 = storeInorder(node2); 
+	          
+	        // Merges both list1 and list2 into list3 
+	        ArrayList<Integer>list3 = merge(list1, list2, list1.size(), list2.size()); 
+	          
+	        //Eventually converts the merged list into resultant BST 
+	        Node node = ALtoBST(list3, 0, list3.size()-1); 
+	        return node; 
+	    } 
+	    
+	    
+	    
+	    /***
+	     * END
+	     * @param args
+	     */
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	 
+	    // Driver Program to test above functions 
+	    public static void main(String[] args) { 
+	        BinarySearchTree tree = new BinarySearchTree(); 
+	  
+	        
+	        tree.insert(10); 
+	        tree.insert(55); 
+	        tree.insert(21); 
+	        tree.insert(33); 
+	        tree.insert(72); 
+	        tree.insert(65); 
+	        tree.insert(90); 
+	       
+	        // print inorder traversal of the BST 
+	        tree.inorder(); 
+	        
+	        System.out.println("Search : ");
+	        System.out.println(tree.search(tree.root, 21));
+	        
+	        
+	        
+	        BinarySearchTree tree1 = new BinarySearchTree(); 
+	        tree1.root = new Node(100); 
+	        tree1.root.left = new Node(50); 
+	        tree1.root.right = new Node(300); 
+	        tree1.root.left.left = new Node(20); 
+	        tree1.root.left.right = new Node(70); 
+	        
+	        
+	        
+	        BinarySearchTree tree2 = new BinarySearchTree(); 
+	        tree2.root = new Node(80);     
+	        tree2.root.left = new Node(40); 
+	        tree2.root.right = new Node(120); 
+	        
+	        
+	        BinarySearchTree tree = new BinarySearchTree();     
+	        tree.root = tree.mergeTrees(tree1.root, tree2.root); 
+	        System.out.println("The Inorder traversal of the merged BST is: "); 
+	        tree.inorder(); 
+	    } 
+
+	 
+
+    
+
+}

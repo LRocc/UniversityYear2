@@ -209,7 +209,7 @@ public class DoubleLinkedList {
 				hash.put(head1.data,head1);
 				head1 = head1.next;
 			}
-			System.out.println(hash + "THIS IS THE SET CONTAINING THE LIST ");
+			System.out.println(hash + "THIS IS THE HASHTABLE CONTAINING THE LIST ");
 			//Check if elements in lsit 2 are able to retrive elements in list1
 			//If all elements in list2 don't return null it means that ALL ELEMENTS OF LIST 2 ARE IN LIST 1
 			while(head2 != null)
@@ -284,10 +284,14 @@ public class DoubleLinkedList {
 			union.printlist(intersect);
 			
 			//TEST FOR SubSet
-			//PROBLEMS HERE ASK A TUTOR
 			boolean isSubSet = list2.subSet(list1, list2);
 			System.out.println("is List2 a subset of list 1:");
 			System.out.println(isSubSet);
+			
+			//TEST FOR Size
+			int size = list2.size(list2);
+			System.out.println("size of list 2:");
+			System.out.println(size);
 			
 		}
 		

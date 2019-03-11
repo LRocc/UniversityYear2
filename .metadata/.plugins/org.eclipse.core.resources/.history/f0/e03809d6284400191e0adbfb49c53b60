@@ -1,0 +1,229 @@
+import javax.swing.tree.TreeNode;
+
+public class BinarySearchTree 
+{
+	/* Class containing left and right child of current node and key value*/
+    class Node { 
+        int key; 
+        Node left, right; 
+  
+        public Node(int item) { 
+            key = item; 
+            left = right = null; 
+        } 
+    } 
+  
+    // Root of BST 
+    Node root; 
+  
+    // Constructor 
+    BinarySearchTree() {  
+        root = null;  
+    } 
+    
+
+	 // SEARCH FUNCTION 
+	 public Node search(Node root, int key) 
+	 { 
+	     // IF Tree is empty or the key is the root 
+	     if (root==null || root.key==key) 
+	     {
+	    	 return root; 
+	     }
+	         
+	     // val is greater than root's key 
+	     //As all greater vaues that the root are kept on the right of the tree
+	     //And all the smaller ones are kept on the left
+	     //We first check if the values if bigger saller or equal to the root and decide where to move from there
+	     if (root.key > key) 
+	     {
+	    	 return search(root.left, key); 
+	  	   
+	     }
+	         
+	     // val is less than root's key 
+	     return search(root.right, key); 
+	 } 
+	 
+	 
+	// INSERTION
+	    void insert(int key) { 
+	       root = insertRec(root, key); 
+	    } 
+	      
+	    /* A recursive function to insert a new key in BST */
+	    Node insertRec(Node root, int key) { 
+	  
+	        /* If the tree is empty, return a new node */
+	        if (root == null) { 
+	            root = new Node(key); 
+	            return root; 
+	        } 
+	  
+	        /* Otherwise, recur down the tree */
+	        if (key < root.key) 
+	            root.left = insertRec(root.left, key); 
+	        else if (key > root.key) 
+	            root.right = insertRec(root.right, key); 
+	  
+	        /* return the (unchanged) node pointer */
+	        return root; 
+	    } 
+	    
+	 // This method mainly calls InorderRec() 
+	    void inorder()  { 
+	       inorderRec(root); 
+	    } 
+	  
+	    // A utility function to do inorder traversal of BST 
+	    static void inorderRec(Node root) { 
+	        if (root != null) { 
+	            inorderRec(root.left); 
+	            System.out.println(root.key); 
+	            inorderRec(root.right); 
+	        } 
+	    } 
+	    
+	    
+	    //DELETION OF A LEAF
+	    // This method mainly calls deleteRec() 
+	    void deleteKey(int key) 
+	    { 
+	        root = deleteRec(root, key); 
+	    } 
+	  
+	    /* A recursive function to insert a new key in BST */
+	    Node deleteRec(Node root, int key) 
+	    { 
+	        /* Base Case: If the tree is empty */
+	        if (root == null)  return root; 
+	  
+	        /* Otherwise, recur down the tree */
+	        if (key < root.key) 
+	            root.left = deleteRec(root.left, key); 
+	        else if (key > root.key) 
+	            root.right = deleteRec(root.right, key); 
+	  
+	        // if key is same as root's key, then This is the node 
+	        // to be deleted 
+	        else
+	        { 
+	            // node with only one child or no child 
+	            if (root.left == null) 
+	                return root.right; 
+	            else if (root.right == null) 
+	                return root.left; 
+	  
+	            // node with two children: Get the inorder successor (smallest 
+	            // in the right subtree) 
+	            root.key = minValue(root.right); 
+	  
+	            // Delete the inorder successor 
+	            root.right = deleteRec(root.right, root.key); 
+	        } 
+	  
+	        return root; 
+	    } 
+	    
+	    int minValue(Node root) 
+	    { 
+	        int minv = root.key; 
+	        while (root.left != null) 
+	        { 
+	            minv = root.left.key; 
+	            root = root.left; 
+	        } 
+	        return minv; 
+	    } 
+	  
+	    //Check if tree is empty
+	    //Just check the root
+	    public boolean isEmpty(Node root,int key)
+	    {
+	    	if(root == null)
+	    	{
+	    		return true;
+	    	}
+	    	else{
+	    		return false;
+	    	}
+	    }
+	    
+	    //Returns the size of the tree
+	    int size()
+	    {
+	    	return size(root);
+	    }
+	    
+	    int size(Node node)
+	    {
+	    	if(node == null)
+	    	{
+	    		return 0;
+	    	}
+	    	else {
+	    		return(size(root.left) + 1 + size(root.right));
+	    	}
+	    }
+	    
+	    /***
+	     * Start
+	     * @param args
+	     */
+	    
+	    
+	        public static Node mergeTrees(Node t1, Node t2) {
+	            if (t1 == null)
+	                return t2;
+	            if (t2 == null)
+	                return t1;
+	            t1.key += t2.key;
+	            t1.left = mergeTrees(t1.left, t2.left);
+	            t1.right = mergeTrees(t1.right, t2.right);
+	            inorderRec(t1);
+	            return t1;
+	        }
+	    
+	    
+	    
+	    /***
+	     * END
+	     * @param args
+	     */
+	 
+	 
+	    // Driver Program to test above functions 
+	    public static void main(String[] args) { 
+	        BinarySearchTree tree = new BinarySearchTree(); 
+	  
+	        
+	        tree.insert(10); 
+	        tree.insert(55); 
+	        tree.insert(21); 
+	        tree.insert(33); 
+	        tree.insert(72); 
+	        tree.insert(65); 
+	        tree.insert(90); 
+	       
+	        // print inorder traversal of the BST 
+	        //tree.inorder(); 
+	        
+	        
+	        
+	        BinarySearchTree tree2 = new BinarySearchTree();
+	        tree2.insert(40);
+	        tree2.insert(42);
+
+	        tree2.insert(400000);
+	        Node result = mergeTrees(tree.root, tree2.root);
+	        //System.out.println(result.toString());
+	        
+	        
+	        
+	    } 
+
+	 
+
+    
+
+}

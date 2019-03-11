@@ -43,7 +43,7 @@ public class BreakPoints {
 		// TODO Auto-generated method stub
 		List<String> list = Arrays.asList(methodName,string,string2);
 		br.add(list);
-		System.out.println(br.toString() + "result");
+		System.out.println(br.toString() + "  \n  ");
 	}
 
 }
